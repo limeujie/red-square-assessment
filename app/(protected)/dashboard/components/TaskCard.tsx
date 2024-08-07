@@ -1,11 +1,12 @@
 import { useAuthState } from "@/lib/hooks/useAuthState";
 import { createClientComponentClient } from "@/lib/utils/createClientComponentClient";
-import { CheckOutlined, DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import { CheckOutlined, DeleteOutlined, EditOutlined, EyeFilled } from "@ant-design/icons";
 import { Button, Card, message, Select } from "antd";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { ProfileType, TaskType } from "../types";
+import ViewDescription from "./ViewDescription";
 
 const EditModal = dynamic(() => import('./CreateTaskModal'))
 
@@ -17,6 +18,8 @@ interface TaskCardProps {
 const TaskCard = ({ item, profiles }: TaskCardProps) => {
     const [assignedTo, setAssignedTo] = useState<ProfileType>();
     const [open, setOpen] = useState(false);
+    const [openDescription, setOpenDescription] = useState(false);
+
     const currentDate = new Date().toISOString();
     const { authState } = useAuthState();
     const router = useRouter();
@@ -75,16 +78,19 @@ const TaskCard = ({ item, profiles }: TaskCardProps) => {
     }
 
     return (
-        <Card className="!flex !flex-col font-semibold">
+        <Card className="!flex !flex-col font-semibold" >
             <div >{item.task_title}</div>
             <div className="flex gap-4">Est. Hours
                 <div className="font-normal">{item.expected_hours} Hrs</div>
             </div>
-            <div className="flex flex-col">Assigned To
+            <div className="flex flex-col gap-4">Assigned To
                 <Select options={profiles} onSelect={(value) => assignNewUser(value)} value={assignedTo} className="w-full !text-xs" />
             </div>
             <br />
             <div className="flex justify-between gap-4">
+                <Button className="!w-full" onClick={() => setOpenDescription(true)}>
+                    <EyeFilled />
+                </Button>
                 <Button className="!w-full" onClick={() => setOpen(true)}>
                     <EditOutlined />
                 </Button>
@@ -95,6 +101,7 @@ const TaskCard = ({ item, profiles }: TaskCardProps) => {
                     <CheckOutlined className="!text-green-500" />
                 </Button>
             </div>
+            <ViewDescription open={openDescription} setOpen={setOpenDescription} item={item} />
             <EditModal open={open} setOpen={setOpen} status={item.task_status} item={item} />
         </Card>
     )

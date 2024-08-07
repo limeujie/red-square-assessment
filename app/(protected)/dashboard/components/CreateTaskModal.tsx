@@ -78,6 +78,7 @@ const CreateTaskModal = ({ open, setOpen, item, status }: CreateTaskProps) => {
         <Modal
             title={!item ? "Create New Task" : "Edit Task"}
             footer={false}
+            closeIcon={null}
             destroyOnClose
             open={open}
             onCancel={onClosed}
