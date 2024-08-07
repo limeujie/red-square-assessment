@@ -54,7 +54,7 @@ const DashboardFilters = ({ filters, profiles }: FilterProps) => {
             <FormItem label="Status" name={'status'}>
                 <Select options={statusOptions} />
             </FormItem>
-            <FormItem label="Date Range" name={'dateRange'}>
+            <FormItem label="Task Created Range" name={'dateRange'}>
                 <RangePicker className="!w-full" />
             </FormItem>
             <FormItem label="Created By" name={'createdBy'} >
