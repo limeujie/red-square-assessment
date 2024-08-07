@@ -1,23 +1,14 @@
 import { endOfDay, startOfDay, sub } from "date-fns";
+import { DashboardFilterType } from "./types";
 
 
-export type DashboardFilterProps = {
-    startDate?: Date;
-    endDate?: Date;
-    status?: "ALL" | "NEW" | "PENDING" | "COMPLETED";
-    assignedTo?: string;
-    createdBy?: string;
-    isDeleted?: boolean;
-    pageStart?: number,
-    pageSize?: number,
-}
-
-export const initialFilters: DashboardFilterProps = {
-    startDate: startOfDay(sub(new Date(), { months: 3 })),
-    endDate: endOfDay(new Date()),
+export const initialFilters: DashboardFilterType = {
+    startDate: startOfDay(sub(new Date(), { months: 3 })).toISOString(),
+    endDate: endOfDay(new Date()).toISOString(),
     status: "ALL",
     pageStart: 1,
-    pageSize: 10
+    pageSize: 10,
+    sortedBy: "UPDATED_AT"
 }
 
 export const statusOptions = [
@@ -32,3 +23,11 @@ export const statuses = [
     'PENDING',
     "COMPLETED"
 ]
+export const allOption = { label: "ALL", value: 'ALL' };
+export const sortedButton = ["CREATED_AT_LATEST", "CREATED_AT_EARLIEST", "UPDATED_AT_LATEST", "UPDATED_AT_EARLIEST"]
+export const sortedOptions = [
+    { value: 'CREATED_AT_LATEST', label: "By Latest Created Date" },
+    { value: 'CREATED_AT_EARLIEST', label: "By Earliest Created Date" },
+    { value: 'UPDATED_AT_LATEST', label: "By Latest Updated Date" },
+    { value: 'UPDATED_AT_EARLIEST', label: "By Earliest Updated Date" },
+];

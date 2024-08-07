@@ -26,6 +26,7 @@ const AuthListener = () => {
             })
         }
         supabaseAuthListener();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return <></>

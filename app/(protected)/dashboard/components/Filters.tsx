@@ -1,26 +1,31 @@
 'use client'
 import MyDatePicker from "@/lib/antd/DateTime";
-import { Button, Checkbox, Form, Input, Select } from "antd";
+import { Button, Checkbox, Form, Select } from "antd";
 import { useForm } from "antd/es/form/Form";
 import FormItem from "antd/es/form/FormItem";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import { DashboardFilterProps, initialFilters, statusOptions } from "../configs";
+import { initialFilters, statusOptions } from "../configs";
+import { DashboardFilterType, ProfileType } from "../types";
 
 interface FilterProps {
-    filters: DashboardFilterProps
+    filters: DashboardFilterType
+    profiles: ProfileType[]
 }
 const { RangePicker } = MyDatePicker;
 
 
-const DashboardFilters = ({ filters }: FilterProps) => {
+const DashboardFilters = ({ filters, profiles }: FilterProps) => {
     const [form] = useForm();
     const router = useRouter();
+
     useEffect(() => {
-        form.setFieldsValue({ ...filters, dateRange: [filters.startDate, filters.endDate] });
+        form.setFieldsValue({ ...filters, dateRange: [new Date(filters.startDate!), new Date(filters.endDate!)] });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filters]);
 
     const onReset = () => {
+        form.resetFields()
         router.replace('/dashboard');
     }
 
@@ -35,8 +40,8 @@ const DashboardFilters = ({ filters }: FilterProps) => {
         if (dateRange && dateRange.length > 1) {
             newValues = {
                 ...newValues,
-                startDate: dateRange[0],
-                endDate: dateRange[1]
+                startDate: new Date(dateRange[0]).toISOString(),
+                endDate: new Date(dateRange[1]).toISOString()
             }
         }
         Object.keys(newValues).forEach(key => newValues[key] === undefined ? delete newValues[key] : {});
@@ -53,10 +58,10 @@ const DashboardFilters = ({ filters }: FilterProps) => {
                 <RangePicker className="!w-full" />
             </FormItem>
             <FormItem label="Created By" name={'createdBy'} >
-                <Input />
+                <Select options={profiles} className="w-full !text-xs" />
             </FormItem>
             <FormItem label="Assigned To" name={'assignedTo'} >
-                <Input />
+                <Select options={profiles} className="w-full !text-xs" />
             </FormItem>
             <FormItem label="Show Deleted" className="!flex md:!flex-col !flex-row" name={'isDeleted'} valuePropName="checked">
                 <Checkbox />
