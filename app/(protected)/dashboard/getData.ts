@@ -3,5 +3,4 @@ import { DashboardFilterProps } from "./configs";
 
 export const getAllData = (queryParams?: DashboardFilterProps) => {
     const supabase = createServerComponentClient();
-    console.log(queryParams);
 }

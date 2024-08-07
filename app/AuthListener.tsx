@@ -28,8 +28,6 @@ const AuthListener = () => {
         supabaseAuthListener();
     }, []);
 
-
-
     return <></>
 }
 

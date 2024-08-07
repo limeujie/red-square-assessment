@@ -27,7 +27,7 @@ const DashbaordPage = ({ searchParams }: { searchParams: DashboardFilterProps })
             <div className="flex ">
                 <Collapse defaultActiveKey={['filters']} items={collapseItems} expandIcon={undefined} className="!w-full" />
             </div>
-            <div className="flex h-full w-full justify-evenly md:flex-row flex-col">
+            <div className="flex h-full w-full justify-evenly md:flex-row flex-col gap-4">
                 <TaskLists status={"NEW"} />
                 <TaskLists status={"PENDING"} />
                 <TaskLists status={"COMPLETED"} />
